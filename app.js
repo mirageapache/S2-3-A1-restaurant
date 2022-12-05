@@ -18,12 +18,20 @@ app.get('/', (req,res) => {
 
 //index - search
 app.get('/search', (req,res) => {
-    const datas = restaurant_list.results.filter(item => {
-    return item.name.toLowerCase().includes(req.query.keyword.toLowerCase())
+  let keyword = req.query.keyword
+  let datas = restaurant_list.results.filter(item => {
+    return item.name.toLowerCase().includes(keyword.toLowerCase())
   })
+  let no_result = ""
+  if(datas.length === 0){
+    no_result = `<h2 style="text-align:center">您搜尋的關鍵字「${keyword}」，找不到相關的餐廳!!</h2>`
+  }
+  
+  res.render('index', {stylesheet: 'index.css',data: datas, keyword:req.query.keyword, no_result})
 
-  res.render('index', {stylesheet: 'index.css',data: datas, keyword:req.query.keyword})
+
 })
+
 
 //show page
 app.get('/restaurants/:restaurant_id', (req,res) => {
