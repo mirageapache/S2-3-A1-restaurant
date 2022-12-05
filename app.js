@@ -16,6 +16,16 @@ app.get('/', (req,res) => {
   res.render('index', {stylesheet: 'index.css',data: restaurant_list.results})
 })
 
+//index - search
+app.get('/search', (req,res) => {
+    const datas = restaurant_list.results.filter(item => {
+    return item.name.toLowerCase().includes(req.query.keyword.toLowerCase())
+  })
+
+  res.render('index', {stylesheet: 'index.css',data: datas, keyword:req.query.keyword})
+})
+
+//show page
 app.get('/restaurants/:restaurant_id', (req,res) => {
   const show_data = restaurant_list.results.filter(item => item.id === Number(req.params.restaurant_id))
   console.log(show_data)
