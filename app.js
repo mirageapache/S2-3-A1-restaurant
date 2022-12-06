@@ -36,7 +36,6 @@ app.get('/search', (req,res) => {
 //show page
 app.get('/restaurants/:restaurant_id', (req,res) => {
   const show_data = restaurant_list.results.filter(item => item.id === Number(req.params.restaurant_id))
-  console.log(show_data)
   res.render('show',{stylesheet: 'show.css', data: show_data[0]})
 })
 
