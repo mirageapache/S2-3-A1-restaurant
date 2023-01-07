@@ -1,9 +1,25 @@
+// 載入框架、套件工具
 const express = require('express')
+const exphbs = require('express-handlebars')
+const mongoose = require('mongoose')
+require('dotenv').config()
+
+const restaurant_list = require('./restaurant.json') //import restaurant.json data
+
+// 宣告
 const app = express()
 const port = 3000
-const exphbs = require('express-handlebars')
-const restaurant_list = require('./restaurant.json') //import restaurant.json data
   
+// 資料庫連線設定
+mongoose.set("strictQuery", false)
+mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true })
+const db = mongoose.connection
+
+// 連線成功
+db.once('open', () => { console.log('mongodb connected!')})
+// 連線失敗
+db.on('error', () => { console.log('connect error!')})
+
 //view engine
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
