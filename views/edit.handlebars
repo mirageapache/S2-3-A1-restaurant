@@ -1,0 +1,42 @@
+<form action="/restaurants/{{ data._id }}/edit" method="POST">
+  <div class="form_div">
+    <h3>編輯餐廳</h3>
+    {{!-- 餐廳名稱 --}}
+    <input id="r_name" class="form-control" type="text" name="name" placeholder="餐廳名稱" value="{{ data.name }}">
+    {{!-- 英文名稱 --}}
+    <input id="r_name_en" class="form-control" type="text" name="name_en" placeholder="英文名稱" value="{{ data.name_en }}">
+    {{!-- 類型 --}}
+    <select id="r_category" class="form-control" name="category" value="{{ data.category }}">
+      {{{ query }}}
+      {{!-- <option value="default">請選擇餐廳類型</option>
+      <option value="中東料理">中東料理</option>
+      <option value="日本料理">日本料理</option>
+      <option value="義式料理">義式料理</option>
+      <option value="美式料理">美式料理</option>
+      <option value="酒吧">酒吧</option>
+      <option value="咖啡廳">咖啡廳</option>
+      <option value="速食餐廳">速食餐廳</option> --}}
+    </select>
+    {{!-- 照片 --}}
+    <input id="r_image" class="form-control" type="text" name="image" placeholder="請輸入照片來源" value="{{ data.image }}">
+    {{!-- 地址 --}}
+    <input id="r_location" class="form-control" type="text" name="location" placeholder="地址"
+      value="{{ data.location }}">
+    {{!-- 電話 --}}
+    <input id="r_phone" class="form-control" type="text" name="phone" placeholder="電話" value="{{ data.phone }}">
+    {{!-- google地圖 --}}
+    <input id="r_google_map" class="form-control" type="text" name="google_map" placeholder="google地圖網址"
+      value="{{ data.google_map }}">
+    {{!-- 評價 --}}
+    <input id="r_rating" class="form-control" type="number" name="rating" placeholder="評價" step="0.1" min="0" max="5"
+      value="{{ data.rating }}">
+    {{!-- 說明 --}}
+    <textarea id="r_description" class="form-control" name="description" cols="30" rows="5"
+      placeholder="餐廳的特色">{{ data.description }}</textarea>
+
+  </div>
+  <div class="submit_div">
+    <button class="submit_btn btn btn-success" type="submit">修改</button>
+    <a class="btn btn-danger" href="/restaurants/{{ data._id }}">取消</a>
+  </div>
+</form>

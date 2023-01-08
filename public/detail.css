@@ -60,12 +60,23 @@ header {
 }
 
 .restaurant-show-title {
-  position: relative;
-  top: -100px;
+  position: absolute;
+  width: 100%;
+  top: 160px;
   color: white;
   text-align: center;
   font-size: 3rem;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 15px 0;
+}
+
+.container{
+  font-size: 1.2rem;
+}
+
+.container>div.row{
+  padding-top: 20px;
 }
 
 @media screen and (max-width: 768px) {

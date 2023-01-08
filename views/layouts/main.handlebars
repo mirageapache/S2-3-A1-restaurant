@@ -29,18 +29,26 @@
         </a>
       </div>
       <div>
-        {{#unless create_page}}
-        <a class="btn btn-primary" href="/restaurant/create" style="margin-right: 20px;">新增餐廳</a>
-        {{/unless}}
+        {{#if index_page}}
+        <a class="nav_btn btn btn-primary" href="/restaurants/create">新增</a>
+        {{/if}}
+
+        {{#if detail_page}}
+        <a class="nav_btn btn btn-warning" href="/restaurants/{{ data._id }}/edit">編輯</a>
+        {{/if}}
 
         {{#unless index_page}}
-        <a class="btn btn-danger" href="/" style="margin-right: 20px;">返回</a>
+        {{#unless edit_page}}
+        <a class="nav_btn btn btn-danger" href="/">返回</a>
+        {{/unless}}
         {{/unless}}
       </div>
     </nav>
 
     {{#unless create_page}}
+    {{#unless edit_page}}
     <div class="banner"></div>
+    {{/unless}}
     {{/unless}}
   </header>
 

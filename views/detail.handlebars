@@ -1,8 +1,7 @@
-<h1 class="mb-1 restaurant-show-title">{{data.name}}</h1>
+<h1 class="mb-1 restaurant-show-title">{{data.name}} <br> ({{data.name_en}})</h1>
 <div class="container">
   <div class="row">
     <div class="col-12 col-md-10 mx-auto">
-
       <p class="mb-1">
         <span class="text-secondary">
           <i class="fas fa-utensils pr-2"></i>
@@ -28,6 +27,14 @@
           電話：
         </span>
         {{data.phone}}
+      </p>
+
+      <p class="mb-1">
+        <span class="text-secondary">
+          <i class="fas fa-star pr-2"></i>
+          評價：
+        </span>
+        {{data.rating}}
       </p>
 
       <p class="mb-5">

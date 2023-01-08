@@ -5,8 +5,10 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 require('dotenv').config()
 
-const restaurant_list = require('./restaurant.json') //import restaurant.json data
-const Restaurant = require('./models/restaurant.js') //import restaurant model
+const restaurant_list = require('./restaurant.json') //載入 restaurant.json 資料
+const Restaurant = require('./models/restaurant.js') //載入 restaurant model
+const Category = require('./models/category.js') //載入 category model
+const category = require('./models/category.js')
 
 // 宣告
 const app = express()
@@ -66,25 +68,13 @@ app.get('/search', (req,res) => {
     })
 })
 
-// 詳細資料頁
-app.get('/restaurants/:id', (req,res) => {
-  const id = req.params.id
-  Restaurant.findById(id).lean()
-    .then((result) => {
-      res.render('detail',{stylesheet: 'detail.css', data: result})
-    }).catch((error) => {
-      console.log(error)
-    });
-
-})
-
 // 新增資料頁
-app.get('/restaurant/create', (req, res) => {
-  res.render('create', {stylesheet: 'create.css', create_page: true})
+app.get('/restaurants/create', (req, res) => {
+  res.render('create', {stylesheet: 'create_edit.css', create_page: true})
 })
 
 // 新增資料
-app.post('/restaurant/create', (req, res) => {
+app.post('/restaurants/create', (req, res) => {
   const data = req.body
   return Restaurant.create({ 
       name: data.name,
@@ -99,6 +89,74 @@ app.post('/restaurant/create', (req, res) => {
     })
     .then(() => {res.redirect('/')})
     .catch(error => console.log(error))
+})
+
+// 詳細資料頁
+app.get('/restaurants/:id', (req,res) => {
+  const id = req.params.id
+  Restaurant.findById(id).lean()
+    .then((result) => {
+      res.render('detail',{stylesheet: 'detail.css', detail_page: true, data: result})
+    }).catch((error) => {
+      console.log(error)
+    });
+
+})
+
+// 編輯資料頁
+app.get('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  let category_list = []
+
+  // 取得category清單
+  Category.find().sort({_id: 1}).lean()
+    .then((result) => {
+      category_list = category_list.concat(result)
+    }).then(() => {
+      // 取得restaurant 資料
+      Restaurant.findById(id).lean()
+      .then((result) => {
+        let query = ''
+        //產生category html 字串
+        for(i = 0; i < category_list.length; i++){
+            if( category_list[i].name === result.category ){
+              query += `<option value="${category_list[i].value}" selected>${category_list[i].name}</option>`
+            }
+            else{
+              query += `<option value="${category_list[i].value}">${category_list[i].name}</option>`
+            }
+          }
+          res.render('edit',{stylesheet: 'create_edit.css', edit_page: true, data: result, query: query})
+        }).catch((error) => {
+          console.log(error)
+        });
+    }).catch((error) => {
+      console.log(error)
+    });
+    
+
+})
+
+// 編輯資料
+app.post('/restaurants/:id/edit', (req, res) => {
+  const id = req.params.id
+  const data = req.body
+  return Restaurant.findById(id)
+  .then(result => {
+    result.name = data.name,
+    result.name_en = data.name_en,
+    result.category = data.category,
+    result.image = data.image,
+    result.location = data.location,
+    result.phone = data.phone,
+    result.google_map = data.google_map,
+    result.rating = data.rating,
+    result.description = data.description
+    return result.save()
+  })
+  .then(() => res.redirect(`/restaurants/${id}`))
+  .catch(error => console.log(error))
+
 })
 
 
