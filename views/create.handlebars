@@ -1,0 +1,60 @@
+<form action="/restaurant/create" method="POST">
+  <div class="form_div">
+    <h3>新增餐廳</h3>
+    {{!-- 餐廳名稱 --}}
+    <input id="r_name" class="form-control" type="text" name="name" placeholder="餐廳名稱">
+    {{!-- 英文名稱 --}}
+    <input id="r_name_en" class="form-control" type="text" name="name_en" placeholder="英文名稱">
+    {{!-- 類型 --}}
+    <select id="r_category" class="form-control" name="category">
+      <option value="default">請選擇餐廳類型</option>
+      <option value="中東料理">中東料理</option>
+      <option value="日本料理">日本料理</option>
+      <option value="義式料理">義式料理</option>
+      <option value="美式料理">美式料理</option>
+      <option value="酒吧">酒吧</option>
+      <option value="咖啡廳">咖啡廳</option>
+      <option value="速食餐廳">速食餐廳</option>
+    </select>
+    {{!-- 照片 --}}
+    <input id="r_image" class="form-control" type="text" name="image" placeholder="請輸入照片來源">
+    {{!-- 地址 --}}
+    <input id="r_location" class="form-control" type="text" name="location" placeholder="地址">
+    {{!-- 電話 --}}
+    <input id="r_phone" class="form-control" type="text" name="phone" placeholder="電話">
+    {{!-- google地圖 --}}
+    <input id="r_google_map" class="form-control" type="text" name="google_map" placeholder="google地圖網址">
+    {{!-- 評價 --}}
+    <input id="r_rating" class="form-control" type="number" name="rating" placeholder="評價" step="0.1" min="0" max="5">
+    {{!-- 說明 --}}
+    <textarea id="r_description" class="form-control" name="description" cols="30" rows="5"
+      placeholder="餐廳的特色"></textarea>
+
+  </div>
+  <div class="submit_div">
+    <button class="submit_btn btn btn-success" type="submit">新增</button>
+  </div>
+</form>
+
+
+
+{{!-- "id": 1,
+"name": "Sababa 沙巴巴中東美食",
+"name_en": "Sababa Pita Bar",
+"category": "中東料理",
+"image": "https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/5635/01.jpg",
+"location": "台北市羅斯福路三段 283 巷 17 號",
+"phone": "02 2363 8009",
+"google_map": "https://goo.gl/maps/BJdmLuVdDbw",
+"rating": 4.1,
+"description": "沙巴巴批塔是台灣第一家純手工批塔專賣店,只選用最新鮮的頂級原料,以及道地的中東家傳配方。" --}}
+
+{{!--
+中東料理
+日本料理
+義式料理
+美式料理
+酒吧
+咖啡廳
+速食餐廳
+--}}
