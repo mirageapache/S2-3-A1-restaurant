@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 
 const restaurant_list = require('./restaurant.json') //import restaurant.json data
+const Restaurant = require('./models/restaurant.js') //import restaurant model
 
 // 宣告
 const app = express()
@@ -24,38 +25,55 @@ db.on('error', () => { console.log('connect error!')})
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
 
-//static files
+//static files[設定自定義檔案(js,css etc...)的載入點(public)資料夾]
 app.use(express.static('public'))
 
-// index page
+
+// 路由設定
+// 首頁
 app.get('/', (req,res) => {
-  res.render('index', {stylesheet: 'index.css',data: restaurant_list.results})
+  // 從資料庫取得資料
+  Restaurant.find().lean()
+    .then((result) => {
+      res.render('index', {stylesheet: 'index.css',data: result})
+    }).catch((error) => {
+      console.log(error)
+    });
+
 })
 
-//index - search
+// 首頁-search
 app.get('/search', (req,res) => {
   let keyword = req.query.keyword
-  let datas = restaurant_list.results.filter(item => {
-    return item.name.toLowerCase().includes(keyword.toLowerCase())
-  })
-  let no_result = ""
-  if(datas.length === 0){
-    no_result = `<h2 style="text-align:center">您搜尋的關鍵字「${keyword}」，找不到相關的餐廳!!</h2>`
+  if(keyword.length === 0){
+    res.redirect('/')
+    return
   }
-  
-  res.render('index', {stylesheet: 'index.css',data: datas, keyword:req.query.keyword, no_result})
+
+  Restaurant.find({$or: [{name: {$regex: keyword.toLowerCase()}}, {name: {$regex: keyword.toUpperCase()}}]}).lean()
+    .then(result => {
+      let no_result = ""
+      if(result.length === 0){
+        no_result = `<h2 style="text-align:center">您搜尋的關鍵字「${keyword}」，找不到相關的餐廳!!</h2>`
+      }
+      res.render('index', {stylesheet: 'index.css',data: result, keyword:req.query.keyword, no_result})
+
+    })
+    .catch(error => {
+      console.log('search function error')
+    })
 
 
 })
 
-
-//show page
+// 詳細資料頁
 app.get('/restaurants/:restaurant_id', (req,res) => {
   const show_data = restaurant_list.results.filter(item => item.id === Number(req.params.restaurant_id))
   res.render('show',{stylesheet: 'show.css', data: show_data[0]})
 })
 
 
+// 監聽伺服器
 app.listen(port, () => {
   console.log(`Server is ready , http://localhost:${port}`)
 })
