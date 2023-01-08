@@ -45,4 +45,17 @@
         style="max-width: 600px;">
     </div>
   </div>
+  <div class="delete_div row">
+    <button class="delete_btn btn btn-danger" data-id="{{ data._id }}">刪除餐廳資料</button>
+  </div>
 </div>
+
+
+<script>
+  const delete_btn = document.querySelector('.delete_btn')
+  delete_btn.addEventListener('click', (e) => {
+    let action = confirm('確定要刪除餐廳資料嗎?')
+    let id = e.target.dataset.id
+    if (action) { window.location.replace(`/restaurants/${id}/delete`) }
+  })
+</script>

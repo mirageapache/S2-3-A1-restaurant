@@ -133,8 +133,6 @@ app.get('/restaurants/:id/edit', (req, res) => {
     }).catch((error) => {
       console.log(error)
     });
-    
-
 })
 
 // 編輯資料
@@ -156,7 +154,15 @@ app.post('/restaurants/:id/edit', (req, res) => {
   })
   .then(() => res.redirect(`/restaurants/${id}`))
   .catch(error => console.log(error))
+})
 
+// 刪除資料
+app.get('/restaurants/:id/delete', (req, res) => {
+  const id = req.params.id
+  console.log(id)
+  return Restaurant.findByIdAndDelete(id)
+    .then(() => { res.redirect('/')})
+    .catch(error => {console.log(error)})
 })
 
 

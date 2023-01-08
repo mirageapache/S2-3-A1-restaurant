@@ -76,7 +76,12 @@ header {
 }
 
 .container>div.row{
-  padding-top: 20px;
+  padding: 20px 0;
+}
+
+.delete_div{
+  position: absolute;
+  right: 200px;
 }
 
 @media screen and (max-width: 768px) {

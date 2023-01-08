@@ -8,14 +8,6 @@
     {{!-- 類型 --}}
     <select id="r_category" class="form-control" name="category" value="{{ data.category }}">
       {{{ query }}}
-      {{!-- <option value="default">請選擇餐廳類型</option>
-      <option value="中東料理">中東料理</option>
-      <option value="日本料理">日本料理</option>
-      <option value="義式料理">義式料理</option>
-      <option value="美式料理">美式料理</option>
-      <option value="酒吧">酒吧</option>
-      <option value="咖啡廳">咖啡廳</option>
-      <option value="速食餐廳">速食餐廳</option> --}}
     </select>
     {{!-- 照片 --}}
     <input id="r_image" class="form-control" type="text" name="image" placeholder="請輸入照片來源" value="{{ data.image }}">
@@ -33,7 +25,6 @@
     {{!-- 說明 --}}
     <textarea id="r_description" class="form-control" name="description" cols="30" rows="5"
       placeholder="餐廳的特色">{{ data.description }}</textarea>
-
   </div>
   <div class="submit_div">
     <button class="submit_btn btn btn-success" type="submit">修改</button>
